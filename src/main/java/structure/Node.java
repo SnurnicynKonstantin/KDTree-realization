@@ -3,7 +3,6 @@ package structure;
 public class Node {
 
     private Geo geo;
-
     private KDTreeRectangle rect;
     private Node leftNode;
     private Node rightNode;
