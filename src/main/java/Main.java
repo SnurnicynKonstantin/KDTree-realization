@@ -1,0 +1,67 @@
+import structure.Geo;
+import structure.KDTree;
+import structure.Node;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
+public class Main {
+    private static int MAX = 100;
+    private static int MIN = 0;
+
+    public static void main(String[] args) {
+        Hashtable testData = getTestData();
+        KDTree tree = new KDTree(MAX, MIN);
+        for(String key: (Set<String>) testData.keySet()) {
+            tree.insert((Geo)testData.get(key));
+        }
+
+        System.out.println("KDTree built");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        while(true) {
+            try {
+                System.out.println("Enter X coordinate:");
+                double x = Double.parseDouble(br.readLine());
+                System.out.println("Enter Y coordinate:");
+                double y = Double.parseDouble(br.readLine());
+                System.out.println("Enter radius:");
+                double radius = Double.parseDouble(br.readLine());
+                Geo point = new Geo(x, y, null);
+                List<Node> result = tree.near(point, radius);
+                System.out.println("List of geos in point " + x + " : " + y + " with radius " + radius + ":");
+                for (Node node : result) {
+                    System.out.println(node.getGeo().getLatitude() + " : " + node.getGeo().getLongitude());
+                }
+                System.out.println("-----------------------------------------------------------------");
+            } catch (IOException e) {
+                System.out.print("Error: incorrect data.");
+            }
+        }
+    }
+
+    private static Hashtable<String, Geo> getTestData() {
+        Hashtable ht = new Hashtable();
+        Random r = new Random();
+        int latitude;
+        int longitude;
+        String title;
+        for(int i = 0; i < 60; i++) {
+            latitude = (int) (MIN + (MAX - MIN) * r.nextDouble());
+            longitude = (int) (MIN + (MAX - MIN) * r.nextDouble());
+            title = "Shop" + i;
+            ht.put(title, new Geo(latitude, longitude, title));
+        }
+//        ht.put("Shop1", new Geo(7, 9, "Shop1"));
+//        ht.put("Shop2", new Geo(9, 10, "Shop2"));
+//        ht.put("Shop3", new Geo(5, 4, "Shop3"));
+//        ht.put("Shop4", new Geo(8, 6, "Shop4"));
+
+        return ht;
+    }
+}
