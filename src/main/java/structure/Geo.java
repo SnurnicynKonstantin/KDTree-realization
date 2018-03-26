@@ -20,6 +20,6 @@ public class Geo {
     }
 
     public Boolean equals(Geo geo) {
-        return latitude == geo.latitude && longitude == geo.longitude && title == geo.title;
+        return latitude == geo.latitude && longitude == geo.longitude && title.equals(geo.title);
     }
 }

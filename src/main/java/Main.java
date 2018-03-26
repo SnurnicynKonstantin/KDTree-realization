@@ -8,18 +8,13 @@ import java.io.InputStreamReader;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 public class Main {
     private static int MAX = 100;
     private static int MIN = 0;
 
     public static void main(String[] args) {
-        Hashtable testData = getTestData();
-        KDTree tree = new KDTree(MAX, MIN);
-        for(String key: (Set<String>) testData.keySet()) {
-            tree.insert((Geo)testData.get(key));
-        }
+        KDTree tree = new KDTree(MAX, MIN, getTestData());
 
         System.out.println("KDTree built");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -57,10 +52,6 @@ public class Main {
             title = "Shop" + i;
             ht.put(title, new Geo(latitude, longitude, title));
         }
-//        ht.put("Shop1", new Geo(7, 9, "Shop1"));
-//        ht.put("Shop2", new Geo(9, 10, "Shop2"));
-//        ht.put("Shop3", new Geo(5, 4, "Shop3"));
-//        ht.put("Shop4", new Geo(8, 6, "Shop4"));
 
         return ht;
     }

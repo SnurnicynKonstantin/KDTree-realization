@@ -1,22 +1,23 @@
 package structure;
 
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 public class KDTree {
     private Node root;
-    private int size;
     private int max;
     private int min;
 
-    public KDTree(int max, int min) {
+    public KDTree(int max, int min, Hashtable data) {
         this.max = max;
         this.min = min;
-        size = 0;
-    }
-
-    public int size() {
-        return size;
+        if(!data.isEmpty()) {
+            for (String key : (Set<String>) data.keySet()) {
+                insert((Geo) data.get(key));
+            }
+        }
     }
 
     public void insert(Geo geo) {
@@ -29,7 +30,6 @@ public class KDTree {
 
     private Node insert(Node node, Geo geo, boolean evenLevel, KDTreeRectangle rect) {
         if (node == null) {
-            size++;
             return new Node(geo, rect, null, null);
         }
 
